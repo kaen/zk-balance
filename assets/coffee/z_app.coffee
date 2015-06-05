@@ -1,5 +1,6 @@
 angular.module('zkbalance', [
   'ngRoute'
+  'angular-loading-bar'
   'infinite-scroll'
   'jsonFormatter'
   'zkbalance.unit'
