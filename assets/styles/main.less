@@ -55,6 +55,14 @@ body {
 }
 
 /* hack to hide `Object` spam on unit defs */
-.json-formatter-row .constructor-name {
-  visibility: hidden;  
+.json-formatter-row{
+  .constructor-name {
+    visibility: hidden;  
+  }
+}
+
+.panel-body > .json-formatter-row > a,
+.unit-def > .json-formatter-row > a
+{
+  display: none;
 }
