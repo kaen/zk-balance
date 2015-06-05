@@ -43,7 +43,7 @@ If everything runs smoothly, we just need to bootstrap the Github data.
 
 To test locally in an environment identical to the production server, install [Docker](https://docs.docker.com/installation/) and simply run:
 
-`$./ops/run-in-docker.sh`
+`$ ./ops/run-in-docker.sh`
 
 Then use `docker ps` to see which port Docker was bound to. Data is automatically refreshed in the production environment.
 
