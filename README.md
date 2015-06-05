@@ -38,3 +38,22 @@ If everything runs smoothly, we just need to bootstrap the Github data.
 6. Allow this to run for a bit (10-20 minutes is ideal, it may take an hour or more to complete by itself)
 7. Hold `Ctrl+C` to kill sails when you get bored (`pkill -9 -f node` may be necessary on slow rigs)
 8. All set! Now type `sails lift` and go to http://localhost:1337/ to start hacking :)
+
+##### Docker
+
+For to tes in an environment identical to the production server locally on your own machine, install [Docker](https://docs.docker.com/installation/) and simply run:
+
+`$./ops/run-in-docker.sh`
+
+Then use `docker ps` to see which port Docker was bound to. Data is automatically refreshed in the production environment.
+
+##### Further Reading
+
+You may want to read up on the stack:
+
+- NodeJS
+- SailsJS
+- AngularJS
+- Twitter Bootstrap
+- Waterline
+- Bluebird
