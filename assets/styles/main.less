@@ -53,3 +53,8 @@ body {
 .no-wrap {
   white-space: nowrap;
 }
+
+/* hack to hide `Object` spam on unit defs */
+.json-formatter-row .constructor-name {
+  visibility: hidden;  
+}
