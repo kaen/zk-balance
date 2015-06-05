@@ -1,0 +1,4 @@
+module.exports.github =
+  username: "your_github_username"
+  password: "your_github_password"
+  auth: "basic"

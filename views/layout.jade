@@ -1,0 +1,30 @@
+!!!
+  head
+    title= title
+
+    // Viewport mobile tag for sensible mobile support
+    meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1")
+    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css", rel="stylesheet")    script(src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/1.4.14/jquery.scrollTo.js")
+    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
+
+    // STYLES
+    link(rel="stylesheet", href="/styles/bootstrap.min.css")
+    link(rel="stylesheet", href="/styles/importer.css")
+    link(rel="stylesheet", href="/styles/json-formatter.min.css")
+    // STYLES END
+        
+    // The linker searches for this tag and adds js.  If there's no linker, we point to sails.io.js
+    // SCRIPTS
+    script(src="/js/000jquery.min.js")
+    script(src="/js/00angular.js")
+    script(src="/js/01angular-route.js")
+    script(src="/js/02ng-infinite-scroll.min.js")
+    script(src="/js/app.js")
+    script(src="/js/json-formatter.min.js")
+    script(src="/js/ui-bootstrap-tpls-0.13.0.min.js")
+    // SCRIPTS END
+    
+    block styles
+
+  body
+    block body

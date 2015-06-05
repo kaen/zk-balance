@@ -1,0 +1,41 @@
+div.row(ng-if="unit")
+  div.col-md-12
+    img.pull-left(src="http://zero-k.info/img/avatars/{{ unit.image }}")
+    h2.unit-name.pull-left &nbsp; {{ unit.friendly_name }}
+     span.small &nbsp;&mdash;&nbsp;{{ unit.unitDef.description }}
+
+  div.col-md-4
+    h3 Current Unit Def
+    div.well.unit-def.unit-def-delta
+      json-formatter(json="unit.unitDef" open=1)
+
+  div.col-md-8
+    h3 Changelog ({{ countChanges() }})
+    form
+      div.checkbox
+        label
+          input(type="checkbox" ng-model="changes.showAll")
+          span Show All
+    div.row(ng-repeat="balanceChange in unit.balanceChanges | filter : showChange")
+      div.col-xs-12
+        div.well
+          h5.commit-message.no-wrap(ng-click="toggle($event)") {{ balanceChange.commit.message }}
+          div.small
+            span.text-bold {{ balanceChange.author }}
+            | &nbsp;&mdash;&nbsp;
+            span.date {{ balanceChange.commit.date | date }}
+
+      div.col-xs-12
+      div.col-xs-6.unit-def.unit-def-delta
+        div.panel.panel-default
+          div.panel-heading Before
+          div.panel-body
+           json-formatter(json="filterOriginalUnitDefValues(null, balanceChange.commit.sha, unit.name, balanceChange.unitDefDelta, balanceChange.beforeUnitDef)" open=4)
+      div.col-xs-6.unit-def.unit-def-delta
+        div.panel.panel-default
+          div.panel-heading After
+          div.panel-body
+            json-formatter(json="balanceChange.unitDefDelta" open=4)
+      div.row
+        div.col-xs-12
+          hr

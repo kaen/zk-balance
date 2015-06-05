@@ -1,0 +1,9 @@
+div(infinite-scroll="nextPage()" infinite-scroll-distance="0")
+  div(ng-repeat="balanceChange in balanceChanges | filter  : { significant: true }")
+    div(ng-class="balanceChange.significant ? 'text-primary' : ''")
+      a(href="#/unit/{{ balanceChange.unit.name }}") {{ balanceChange.unit.friendly_name }}&nbsp;
+      span ({{ balanceChange.unit.name }})
+    img(src="http://zero-k.info/img/avatars/{{ balanceChange.unit.image }}")
+    div {{ balanceChange.author }}
+    div {{ balanceChange.commit.date }}
+    pre {{ balanceChange.fileDelta }}

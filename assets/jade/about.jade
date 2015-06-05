@@ -1,0 +1,56 @@
+div.row
+  div.col-xs-12.col-md-6
+    h1 About
+
+    h3 Inspiration
+    :markdown
+      This project was inspired by [this forum thread](http://zero-k.info/Forum/Thread/16327) and the kick-ass Zero-K 1v1 scene. Shout outs to [Aquanim](http://zero-k.info/Users/Detail/313773) and [[2up]knorke] (http://zero-k.info/Users/Detail/1292) in particular for getting the brain juices flowing.
+
+    h3 Perspiration
+    :markdown
+      This project was developed by [kaen](https://www.youtube.com/channel/UCKJ3DVbABrprYa4GUBwxdrA) over the course of a few days.
+
+    h3 Operation
+    :markdown
+      #### Stack
+
+      - Elastic Beanstalk
+      - NodeJS
+      - SailsJS
+      - PostgreSQL
+      - octonode
+      - object-versions
+      - lua
+
+      #### Process
+
+      The app periodically pumps GitHub for commit data on the Zero-K
+      repository. It scans any non-merge commit that touches the `/units/`
+      directory (where unit definitions are stored). It then requests the file
+      contents before and after each commmit, then uses some black magic to
+      extract a JSON representation of the original Lua unit def at each
+      point. `object-versions` is then used to generate a delta for each
+      change. The app has some knowledge about which unit def attributes are
+      "significant" to game balance, and by default will only show commits
+      which affected these "significant" attributes (see below).
+
+    h3 Signification
+    :markdown
+      The following unit def attributes are considered "significant" to the
+      game balance. Commits affecting any of these attributes are shown by
+      default, while the rest are hidden unless "Show All" has been clicked.
+
+      Note that *any* modification to `weapon` or `weapondefs` currently causes a
+      positive match. This leads to a number of false positives. It is
+      possible to be more intelligent about this, but the needed changes are
+      still WIP.
+
+    div
+      json-formatter(json="significantAttributes", open=1)
+
+    h3 Qualification
+    :markdown
+      So far, commits between {{ commitRange.oldest.date | date }} and {{
+      commitRange.newest.date | date }} have been processed. Commits are refreshed
+      hourly, but due to github rate limits and cheap hardware, updates may
+      lag by as much as 24 hours.
