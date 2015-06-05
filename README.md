@@ -41,7 +41,7 @@ If everything runs smoothly, we just need to bootstrap the Github data.
 
 ##### Docker
 
-For to tes in an environment identical to the production server locally on your own machine, install [Docker](https://docs.docker.com/installation/) and simply run:
+To test locally in an environment identical to the production server, install [Docker](https://docs.docker.com/installation/) and simply run:
 
 `$./ops/run-in-docker.sh`
 
