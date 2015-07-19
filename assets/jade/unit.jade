@@ -16,7 +16,7 @@ div.row(ng-if="unit")
         label
           input(type="checkbox" ng-model="changes.showAll")
           span Show All
-    div.row(ng-repeat="balanceChange in unit.balanceChanges | filter : showChange")
+    div.row(ng-repeat="balanceChange in unit.balanceChanges | filter : showChange | orderBy : 'commit.date' : true")
       div.col-xs-12
         div.well
           h5.commit-message.no-wrap(ng-click="toggle($event)") {{ balanceChange.commit.message }}
