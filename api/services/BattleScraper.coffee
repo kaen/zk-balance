@@ -6,6 +6,8 @@ BATTLES_URL = 'http://zero-k.info/Battles'
 BATTLES_DETAIL_URL = 'http://zero-k.info/Battles/Detail/'
 BATTLE_DATE_REGEX = /replays\/(\d+_\d+)_/
 BATTLE_DATE_FORMAT = 'YYYYMMDD_HHmmss'
+BATTLE_START_DATE = '2015-07-17'
+SATURDAY = 6
 CLAN_REGEX = /clans\/(.+)\.png/
 
 class BattleScraper
@@ -22,33 +24,47 @@ class BattleScraper
 
   ingestBattle: (battleId)=>
     request.get("#{BATTLES_DETAIL_URL}/#{battleId}")
-      .then @scrapeBattle
+      .then((html)=> @scrapeBattle html, battleId)
 
-  scrapeBattle: (html)=>
+  scrapeBattle: (html, battleId)=>
     $ = cheerio.load html
     winner = @guessClan $('.battle_winner')
     loser = @guessClan $('.battle_loser')
     date = @parseDate $('a:contains("Manual download")').get(0)
+
+    unless @filterBattle(winner, loser, date)
+      return sails.log.debug "Skipping battle #{battleId}"
+
+    sails.log.debug "Creating battle #{battleId}"
     Clan.findOrCreate(name: winner)
       .then sails.log.debug
       .then Clan.findOrCreate(name: loser)
       .then sails.log.debug
-      .then (=> ClanMatch.create winner: winner, loser: loser, date: date)
+      .then (=> ClanMatch.findOrCreate battleId)
+      .then ((clan)=> ClanMatch.update battleId, winner: winner, loser: loser, date: date)
       .then sails.log.debug
 
+  filterBattle: (winner, loser, date)=>
+    winner != 'Unknown' and
+    loser != 'Unknown' and
+    moment(date).isAfter(BATTLE_START_DATE) and
+    moment(date).day() == SATURDAY
+
   guessClan: (el)=>
-    sails.log.debug el.find('img[src*="clan"]').attr('src')
     clans = el.find('img[src*="clan"]').map (i, el)->
       el.attribs.src.match(CLAN_REGEX)[1] || 'Unknown'
 
     counts = { }
+    # We return unknown unless there are *at least* two players from the same
+    # clan on the same team
     bestClan = 'Unknown'
-    bestCount = -1
+    bestCount = 1
     for clan in clans
+      sails.log.debug clan
       if counts[clan]
         counts[clan]++
       else
-        counts[clan] = 0
+        counts[clan] = 1
 
       if counts[clan] > bestCount
         bestCount = counts[clan]

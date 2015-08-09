@@ -2,7 +2,6 @@ module.exports =
   attributes:
     date:
       type: 'date'
-      required: true
       index: true
       
     title:
@@ -10,8 +9,6 @@ module.exports =
 
     winner:
       model: 'Clan'
-      required: true
 
     loser:
       model: 'Clan'
-      required: true
