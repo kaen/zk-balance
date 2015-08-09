@@ -85,7 +85,7 @@ class BattleScraper
 
   promiseBattleIds: =>
     form =
-      battleTitle: 'GBC'
+      battleTitle: ''
       age: 'All Time'
       mission: 'No'
       bots: 'No'
