@@ -10,6 +10,19 @@ angular.module 'zkbalance.clans', []
     $scope.filterclan = (clan)->
       clan.friendly_name.toLowerCase().indexOf($scope.filter.filter.toLowerCase()) >= 0
 
+    logoFor = (ent)->
+      console.log arguments
+
+    $scope.columnDefs = [
+      { name: 'clan', cellTemplate: '<div class="ui-grid-cell-contents"><img height=24 width=24 src="http://zero-k.info/img/clans/{{ row.entity.name }}.png">&nbsp;{{ row.entity.name }}</a></div>' }
+      { name: 'wins' }
+      { name: 'losses' }
+      { name: 'winRate' }
+      { name: 'opponentWinRate' }
+      { name: 'score' }
+    ]
+
+
     $http.get('/clan/', cache: true)
       .success (data)->
         $scope.clans = data

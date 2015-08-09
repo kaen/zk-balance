@@ -5,4 +5,4 @@ div.row(ng-if="clan")
      span.small &nbsp;&mdash;&nbsp;{{ clan.score | number : 3 }}
 
 div.row(ng-if="clans")
-  div(ui-grid="{ data: clans }")
+  div(ui-grid="{ data: clans, columnDefs: columnDefs }")
