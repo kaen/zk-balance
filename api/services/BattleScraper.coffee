@@ -46,6 +46,7 @@ class BattleScraper
       .then sails.log.debug
 
   filterBattle: (winner, loser, date)=>
+    winner != loser and
     winner != 'Unknown' and
     loser != 'Unknown' and
     moment(date).isAfter(BATTLE_START_DATE) and
