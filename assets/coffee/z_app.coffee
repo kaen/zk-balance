@@ -10,6 +10,7 @@ angular.module('zkbalance', [
   'zkbalance.collapse'
   'zkbalance.navbar'
   'zkbalance.about'
+  'ui.grid'
 ])
 
 .config [
