@@ -1,0 +1,14 @@
+div.row(ng-if="clan")
+  div.col-md-12
+    img.pull-left(src="http://zero-k.info/img/clans/{{ clan.name }}.png")
+    h2.clan-name.pull-left &nbsp; {{ clan.friendly_name }}
+     span.small &nbsp;&mdash;&nbsp;{{ clan.score | number : 3 }}
+
+div.row(ng-if="clans")
+  div.col-md-12
+    div.row(ng-repeat="clan in clans | orderBy : 'score' : true")
+      img.pull-left(src="http://zero-k.info/img/clans/{{ clan.name }}.png")
+      div.col-xs-12 {{ clan.name }}
+      div.col-xs-12 {{ clan.score }}
+      div.col-xs-12 {{ clan.winRate }}
+      div.col-xs-12 {{ clan.opponentWinRate }}

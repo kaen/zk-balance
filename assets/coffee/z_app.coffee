@@ -3,6 +3,7 @@ angular.module('zkbalance', [
   'angular-loading-bar'
   'infinite-scroll'
   'jsonFormatter'
+  'zkbalance.clans'
   'zkbalance.unit'
   'zkbalance.units'
   'zkbalance.balanceChange'
@@ -14,6 +15,11 @@ angular.module('zkbalance', [
 .config [
   '$routeProvider'
   ($routeProvider)->
+    $routeProvider.when '/clans', {
+      templateUrl: 'views/clans.html',
+      controller: 'ClansController'
+    }
+
     $routeProvider.when '/units', {
       templateUrl: 'views/units.html',
       controller: 'UnitsController'
