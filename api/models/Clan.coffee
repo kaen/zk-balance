@@ -7,5 +7,24 @@ module.exports =
       unique: true
 
     score:
+      type: 'float'
+
+    winRate:
+      type: 'float'
+
+    wins:
       type: 'integer'
-      default: 0
+
+    losses:
+      type: 'integer'
+
+    opponentWinRate:
+      type: 'float'
+
+  findAllOpponents: (clan)->
+    where =
+      or:
+        loser: clan
+        winner: clan
+
+    ClanMatch.find(where: where)
