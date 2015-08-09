@@ -31,6 +31,7 @@ class BattleScraper
     winner = @guessClan $('.battle_winner')
     loser = @guessClan $('.battle_loser')
     date = @parseDate $('a:contains("Manual download")').get(0)
+    @done = true unless moment(date).isAfter(BATTLE_START_DATE)
 
     unless @filterBattle(winner, loser, date)
       return sails.log.debug "Skipping battle #{battleId}"
@@ -106,5 +107,14 @@ class BattleScraper
   checkIfDone: (battleIds)=>
     @done = true unless battleIds && battleIds.length > 0
     battleIds
+
+BattleScraper.ingestBattles = ->
+  (new BattleScraper).ingestBattles()
+    .then ClanScoreCalculator.calculate
+
+if sails.config.zkbalance.autoRefresh
+  setTimeout BattleScraper.ingestBattles, 10 * 1000
+  setInterval BattleScraper.ingestBattles, 60 * 60 * 1000
+
 
 module.exports = BattleScraper

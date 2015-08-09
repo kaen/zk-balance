@@ -112,4 +112,7 @@ class ClanScoreCalculator
         sails.log.debug "#{clan.name} score: #{score}"
         Clan.update clan.name, score: score 
 
+ClanScoreCalculator.calculate = ->
+  (new ClanScoreCalculator).calculate()
+
 module.exports = ClanScoreCalculator
