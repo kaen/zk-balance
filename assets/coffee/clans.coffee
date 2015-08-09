@@ -17,11 +17,10 @@ angular.module 'zkbalance.clans', []
       { name: 'clan', cellTemplate: '<div class="ui-grid-cell-contents"><img height=24 width=24 src="http://zero-k.info/img/clans/{{ row.entity.name }}.png">&nbsp;{{ row.entity.name }}</a></div>' }
       { name: 'wins' }
       { name: 'losses' }
-      { name: 'winRate' }
-      { name: 'opponentWinRate' }
-      { name: 'score' }
+      { name: 'winRate', cellFilter: 'number : 3' }
+      { name: 'opponentWinRate', cellFilter: 'number : 3' }
+      { name: 'score', cellFilter: 'number : 3' }
     ]
-
 
     $http.get('/clan/', cache: true)
       .success (data)->
