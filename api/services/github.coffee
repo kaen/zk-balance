@@ -180,8 +180,8 @@ github.filterUnitDef = (unitDef)->
 
 github.refreshGithubData = ->
   github.loadUnitDefs()
-    .then github.loadCommits
     .then OfficialUnitDeterminer.determineOfficialUnits
+    .then github.loadCommits
 
 if sails.config.zkbalance.autoRefresh
   setTimeout github.refreshGithubData, 10 * 1000
