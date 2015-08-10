@@ -1,3 +1,5 @@
 div.row(ng-if="units")
+  script
+    | setTimeout(function(){ $('.ui-grid-filter-input').focus() }, 0)
   div.col-xs-12
     div(ui-grid="{ data: units, columnDefs: columnDefs, enableFiltering: true, rowHeight: 60}" style="height: 800px;")
