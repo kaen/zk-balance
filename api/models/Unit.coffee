@@ -20,3 +20,6 @@ module.exports =
 
     unitDef:
       type: 'string'
+
+    official:
+      type: 'boolean'

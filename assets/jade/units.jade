@@ -1,16 +1,3 @@
-div.row
+div.row(ng-if="units")
   div.col-xs-12
-    form
-      p
-        input.form-control.input-block-level(type="text" placeholder="Filter by name" ng-model="filter.filter")
-
-div.row
-  div.col-xs-4.col-md-3(ng-repeat="unit in units | orderBy : 'friendly_name' | filter: filterUnit ")
-    .row
-      .col-xs-12
-        a.btn.btn-default.btn-block.unit-link(href="#/unit/{{ unit.name }}")
-          .row
-            div.col-xs-4
-              img.pull-left.unit-image(src="http://zero-k.info/img/avatars/{{ unit.image }}") 
-            div.col-xs-8.pull-right.friendly-name {{ unit.friendly_name }}
-        p
+    div(ui-grid="{ data: units, columnDefs: columnDefs, enableFiltering: true, rowHeight: 60}" style="height: 800px;")
