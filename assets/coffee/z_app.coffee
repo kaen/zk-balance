@@ -6,6 +6,7 @@ angular.module('zkbalance', [
   'zkbalance.clans'
   'zkbalance.unit'
   'zkbalance.units'
+  'zkbalance.units_service'
   'zkbalance.balanceChange'
   'zkbalance.collapse'
   'zkbalance.navbar'

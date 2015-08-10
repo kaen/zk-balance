@@ -4,10 +4,11 @@ angular.module 'zkbalance.units', []
   '$http'
   '$routeParams'
   'uiGridConstants'
-  ($scope, $http, $routeParams, uiGridConstants)->
-    # overview of all units
-    $scope.units = null
-
+  'units'
+  ($scope, $http, $routeParams, uiGridConstants, units)->
+    units.get().then (units)=>
+      $scope.units = units
+      
     officialFilter =
       term: 'true'
       type: uiGridConstants.filter.SELECT
@@ -27,34 +28,4 @@ angular.module 'zkbalance.units', []
       { name: 'range', headerCellClass: 'text-center', cellClass: 'text-center', enableFiltering: false, cellFilter: 'number : 2' }
       { name: 'official', headerCellClass: 'text-center', cellClass: 'text-center', type: 'boolean', filter: officialFilter }
     ]
-
-    calculateWeaponStats = (unit, def)->
-      unit.dps = 0
-      unit.range = 0
-      return unless def.weapons
-      for weapon in def.weapons
-        continue unless weapon
-        weapondef = def.weapondefs[weapon.def.toLowerCase()]
-        unit.range = Math.max unit.range, (weapondef.range || 0)
-        continue if weapondef.paralyzer
-        mult = if weapondef.burst != undefined then weapondef.burst else 1
-        damage = Math.max weapondef.damage.default, (weapondef.damage.planes || 0), (weapondef.damage.subs || 0)
-        unit.dps += (mult * damage / weapondef.reloadtime) || 0
-
-    GRID_KEYS = [
-      'id'
-      'buildtime'
-      'maxdamage'
-      'maxvelocity'
-    ]
-
-    $http.get('/unit/', cache: true)
-      .success (data)->
-        $scope.units = data
-        for unit in $scope.units
-          def = JSON.parse unit.unitDef
-          for k in GRID_KEYS
-            unit[k] = def[k]
-
-          calculateWeaponStats unit, def
 ]
