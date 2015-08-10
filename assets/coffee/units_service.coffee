@@ -33,7 +33,7 @@ angular.module 'zkbalance.units_service', []
             def = JSON.parse unit.unitDef
             for k in GRID_KEYS
               unit[k] = def[k]
-
+            unit.maxvelocity = 0 if unit.maxvelocity is undefined
             calculateWeaponStats unit, def
           units
         .then (-> units)

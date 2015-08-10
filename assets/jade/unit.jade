@@ -4,6 +4,11 @@ div.row(ng-if="unit")
     h2.unit-name.pull-left &nbsp; {{ unit.friendly_name }}
      span.small &nbsp;&mdash;&nbsp;{{ unit.unitDef.description }}
 
+  div.col-md-12
+    div.row
+      div.col-md-6
+        p {{ unit.unitDef.customparams.helptext}}
+
   div.col-md-4
     h3 Current Unit Def
     div.well.unit-def.unit-def-delta
