@@ -30,7 +30,7 @@ ADD app.coffee Gruntfile.js /app/
 
 RUN apt-get install --yes lua5.2
 
-ENV NODE_ENV production
+ENV NODE_ENV docker
 ENV PORT 1337
 EXPOSE 1337
 
