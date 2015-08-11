@@ -8,6 +8,24 @@ div.row(ng-if="unit")
     div.row
       div.col-md-6
         p {{ unit.unitDef.customparams.helptext}}
+      //- div.col-md-6
+      //-   div(ui-grid='{data: weaponSummary, rowHeight: 60}' style='height: 300px;')
+      div.col-md-6
+        div.row
+          div.col-md-6(ng-repeat='weapon in weaponSummary')
+            div.row
+              div.col-md-12
+                div.well.well-sm
+                  h4 {{ weapon.name }}
+                  div.row
+                    div.col-md-6 Damage
+                    div.col-md-6 {{ weapon.damage }}
+                    div.col-md-6 Reload Time
+                    div.col-md-6 {{ weapon.reloadtime }}
+                    div.col-md-6 DPS
+                    div.col-md-6 {{ weapon.dps | number : 2 }}
+                    div.col-md-6 Range
+                    div.col-md-6 {{ weapon.range }}
 
   div.col-md-4
     h3 Current Unit Def

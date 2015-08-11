@@ -3,9 +3,11 @@ angular.module 'zkbalance.unit', []
   '$scope'
   '$http'
   '$routeParams'
-  ($scope, $http, $routeParams)->
+  'weaponSummarizer'
+  ($scope, $http, $routeParams, weaponSummarizer)->
     # single unit in detailed view
     $scope.unit = null
+    $scope.weaponSummary = null
     $scope.changes =
       showAll: false
 
@@ -53,6 +55,7 @@ angular.module 'zkbalance.unit', []
           # TODO: inflate all of this in the DB layer?
           $scope.unit = data
           $scope.unit.unitDef = JSON.parse($scope.unit.unitDef)
+          $scope.weaponSummary = weaponSummarizer.summarizeWeapons $scope.unit.unitDef
 
           for change in $scope.unit.balanceChanges
             change.beforeUnitDef = JSON.parse(change.beforeUnitDef)

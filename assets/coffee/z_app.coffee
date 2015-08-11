@@ -11,6 +11,7 @@ angular.module('zkbalance', [
   'zkbalance.collapse'
   'zkbalance.navbar'
   'zkbalance.about'
+  'zkbalance.weaponSummarizerService'
   'ui.grid'
 ])
 
