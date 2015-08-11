@@ -148,12 +148,12 @@ github.loadUnitDef = (file)->
   .error sails.log.error
 
 # always returns an unwrapped unit def
-github.findOrCreateUnitFromWrappedUnitDef = (wrappedUnitDef)->
+github.findOrCreateUnitFromWrappedUnitDef = (wrappedUnitDef)=>
   # unitdefs have a structure like { corsh: { name: ... } }
   # so we need to get the only key -> value pair in the top-level object
   for own unitName, unitDef of wrappedUnitDef
     unitDef.id = unitName
-    return Unit.findOne(unitName).then (unit)->
+    return Unit.findOne(unitName).then (unit)=>
       if unit
         sails.log.info "Found unit #{unitName}"
         return unitDef
