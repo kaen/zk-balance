@@ -4,6 +4,8 @@ angular.module('zkbalance', [
   'infinite-scroll'
   'jsonFormatter'
   'zkbalance.clans'
+  'zkbalance.clanMatches'
+  'zkbalance.unit'
   'zkbalance.unit'
   'zkbalance.units'
   'zkbalance.units_service'
@@ -18,6 +20,11 @@ angular.module('zkbalance', [
 .config [
   '$routeProvider'
   ($routeProvider)->
+    $routeProvider.when '/clan_matches', {
+      templateUrl: 'views/clan_matches.html',
+      controller: 'ClanMatchesController'
+    }
+
     $routeProvider.when '/clans', {
       templateUrl: 'views/clans.html',
       controller: 'ClansController'

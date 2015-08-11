@@ -32,6 +32,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  'GET /clan_match': 'ClanMatchController.find',
   'GET /clan': 'ClanController.find',
   'GET /unit/:name': 'UnitController.findOne',
   'GET /unit': 'UnitController.find',
