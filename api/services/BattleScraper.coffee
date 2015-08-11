@@ -113,8 +113,8 @@ BattleScraper.ingestBattles = ->
   (new BattleScraper).ingestBattles()
     .then ClanScoreCalculator.calculate
 
-if sails.config.zkbalance.autoRefresh
-  setTimeout BattleScraper.ingestBattles, 10 * 1000
+BattleScraper.beginAutoRefresh = ->
+  setTimeout BattleScraper.ingestBattles, 0
   setInterval BattleScraper.ingestBattles, 60 * 60 * 1000
 
 

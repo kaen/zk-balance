@@ -183,8 +183,8 @@ github.refreshGithubData = ->
     .then OfficialUnitDeterminer.determineOfficialUnits
     .then github.loadCommits
 
-if sails.config.zkbalance.autoRefresh
-  setTimeout github.refreshGithubData, 10 * 1000
+github.beginAutoRefresh = ->
+  setTimeout github.refreshGithubData, 0
   setInterval github.refreshGithubData, 60 * 60 * 1000
 
 module.exports = github

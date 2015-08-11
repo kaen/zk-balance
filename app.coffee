@@ -44,4 +44,7 @@ if sails?
         {}
 
   # Start server
-  sails.lift hooks: { sockets: false, pubsub: false }
+  sails.lift hooks: { sockets: false, pubsub: false }, ->
+    sails.log.info "Autorefresh: #{sails.config.zkbalance.autoRefresh}"
+    github.beginAutoRefresh() if sails.config.zkbalance.autoRefresh
+    BattleScraper.beginAutoRefresh() if sails.config.zkbalance.autoRefresh
