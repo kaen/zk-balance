@@ -21,7 +21,10 @@ class ClanScoreCalculator
       .then @calculateWinRateFromRecords
       .then (opponentWinRate)=>
         sails.log.debug "#{clan.name} Opponent Win Rate: #{opponentWinRate}"
-        Clan.update(clan.name, opponentWinRate: opponentWinRate)
+        try
+          Clan.update(clan.name, opponentWinRate: opponentWinRate)
+        catch e
+          sails.log.warn "Couldn't update clan win rate for #{clan.name}: #{e}"
 
   calculateWinRateFromRecords: (records)=>
     losses = 0
