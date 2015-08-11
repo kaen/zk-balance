@@ -21,7 +21,7 @@ angular.module 'zkbalance.units', []
 
     smallWidth = 80
     $scope.columnDefs = [
-      { name: 'friendly_name', sort: { direction: uiGridConstants.ASC }, filter: unitFilter, cellTemplate: '<div title="{{ row.entity.description }}" class="ui-grid-cell-contents"><a href="#/unit/{{ row.entity.id }}"><img height=48 width=48 src="http://zero-k.info/img/avatars/{{ row.entity.image }}">&nbsp;{{ row.entity.friendly_name }}</a></div>' }
+      { name: 'friendly_name', sort: { direction: uiGridConstants.ASC }, filter: unitFilter, cellTemplate: '<div title="{{ row.entity.description }}" class="ui-grid-cell-contents"><a href="#/unit/{{ row.entity.id }}"><img height=48 width=48 ng-src="http://zero-k.info/img/avatars/{{ row.entity.image }}">&nbsp;{{ row.entity.friendly_name }}</a></div>' }
       { width: smallWidth, name: 'buildtime', headerCellClass: 'text-center', cellClass: 'text-center', enableFiltering: false, displayName: 'Cost' }
       { width: smallWidth, name: 'maxdamage', headerCellClass: 'text-center', cellClass: 'text-center', enableFiltering: false, displayName: 'Health' }
       { width: smallWidth, name: 'maxvelocity', headerCellClass: 'text-center', cellClass: 'text-center', enableFiltering: false, displayName: 'Speed' }
