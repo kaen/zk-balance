@@ -17,7 +17,7 @@ class BattleScraper
     @done = false
 
   ingestBattles: =>
-    return if @done
+    return Promise.resolve('done') if @done
     @promiseBattleId()
       .then @ingestBattle
       .then @ingestBattles
