@@ -115,7 +115,7 @@ BattleScraper.ingestBattles = ->
 
 BattleScraper.beginAutoRefresh = ->
   setTimeout BattleScraper.ingestBattles, 0
-  setInterval BattleScraper.ingestBattles, 60 * 60 * 1000
+  setInterval BattleScraper.ingestBattles, 24 * 60 * 60 * 1000
 
 
 module.exports = BattleScraper
