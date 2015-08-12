@@ -6,6 +6,7 @@ angular.module 'zkbalance.units_service', []
     calculateWeaponStats = (unit, def)->
       unit.dps = 0
       unit.range = 0
+      unit.speed = (unit.maxvelocity * 30) || 0
       return unless def.weapons
       for weapon in def.weapons
         continue unless weapon
