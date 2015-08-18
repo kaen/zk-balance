@@ -27,6 +27,7 @@ angular.module 'zkbalance.units', []
       { width: smallWidth, name: 'speed', headerCellClass: 'text-center', cellClass: 'text-center', enableFiltering: false, displayName: 'Speed', cellFilter: 'number : 2' }
       { width: smallWidth, name: 'dps', headerCellClass: 'text-center', cellClass: 'text-center', enableFiltering: false, displayName: 'DPS', cellFilter: 'number : 2' }
       { width: smallWidth, name: 'range', headerCellClass: 'text-center', cellClass: 'text-center', enableFiltering: false, cellFilter: 'number : 2' }
+      { width: smallWidth, name: 'sightdistance', headerCellClass: 'text-center', cellClass: 'text-center', enableFiltering: false, cellFilter: 'number : 2' }
       { width: smallWidth, name: 'official', headerCellClass: 'text-center', cellClass: 'text-center', type: 'boolean', filter: officialFilter }
     ]
 ]

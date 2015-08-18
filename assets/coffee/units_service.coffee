@@ -22,6 +22,7 @@ angular.module 'zkbalance.units_service', []
       'buildtime'
       'maxdamage'
       'maxvelocity'
+      'sightdistance'
     ]
 
     units = undefined
