@@ -1,7 +1,7 @@
 div.row(ng-if="unit")
-  div.col-md-12
-    img.pull-left(src="http://zero-k.info/img/avatars/{{ unit.image }}")
-    h2.unit-name.pull-left &nbsp; {{ unit.friendly_name }}
+  div.col-xs-12
+    img.pull-left(ng-src="http://zero-k.info/img/avatars/{{ unit.image }}")
+    h2.unit-name(style="overflow: hidden") &nbsp; {{ unit.friendly_name }}
      span.small &nbsp;&mdash;&nbsp;{{ unit.unitDef.description }}
 
   div.col-md-12
@@ -12,7 +12,7 @@ div.row(ng-if="unit")
       //-   div(ui-grid='{data: weaponSummary, rowHeight: 60}' style='height: 300px;')
       div.col-md-6
         div.row
-          div.col-md-6(ng-repeat='weapon in weaponSummary')
+          div.col-xs-6(ng-repeat='weapon in weaponSummary')
             div.row
               div.col-md-12
                 div.well.well-sm
@@ -21,14 +21,14 @@ div.row(ng-if="unit")
                     span(ng-if='weapon.mult > 1') &nbsp;&times;&nbsp;{{ weapon.mult }}
 
                   div.row
-                    div.col-md-6 Damage
-                    div.col-md-6 {{ weapon.damage }}
-                    div.col-md-6 Reload Time
-                    div.col-md-6 {{ weapon.reloadtime }}
-                    div.col-md-6 DPS
-                    div.col-md-6 {{ weapon.dps | number : 2 }}
-                    div.col-md-6 Range
-                    div.col-md-6 {{ weapon.range }}
+                    div.col-xs-6 Damage
+                    div.col-xs-6 {{ weapon.damage }}
+                    div.col-xs-6 Reload Time
+                    div.col-xs-6 {{ weapon.reloadtime }}
+                    div.col-xs-6 DPS
+                    div.col-xs-6 {{ weapon.dps | number : 2 }}
+                    div.col-xs-6 Range
+                    div.col-xs-6 {{ weapon.range }}
 
   div.col-md-4
     h3 Current Unit Def
