@@ -1,7 +1,7 @@
 module.exports = function (grunt) {
 	grunt.registerTask('build', [
-    'bake',
 		'compileAssets',
+    'bake',
 		'linkAssetsBuild',
 		'clean:build',
 		'copy:build'

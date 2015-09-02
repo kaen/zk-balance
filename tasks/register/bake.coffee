@@ -1,12 +1,17 @@
 module.exports = (grunt)->
   grunt.registerTask 'bake', 'Bake unit data into json files', ->
-    console.log 'lifting'
-    sails = require('sails')
+    grunt.log.writeln 'lifting sails...'
+    sails = require 'sails'
+    fs = require 'fs'
     options =
       hooks: { http: false, sockets: false, pubsub: false, views: false }
     done = this.async()
-    sails.load options, (_, s)->
-      console.log 'lifted'
-      Unit.find().then(console.log)
-      console.log this
-      done()
+    sails.lift options, (err, s)->
+      Unit.find()
+        .then (data)->
+          grunt.file.write('.tmp/public/units.json', JSON.stringify(data))
+          return data
+        .catch (err)->
+          grunt.fail.warn 'Could not write unit file'
+        .finally ->
+          done()
