@@ -1,14 +1,8 @@
 hist = require 'object-versions'
 Github = require 'octonode'
 
-sails.config.github = sails.config.github || { }
-sails.config.github.username = sails.config.github.username || process.env['GITHUB_USERNAME']
-sails.config.github.password = sails.config.github.password || process.env['GITHUB_PASSWORD']
-sails.config.github.auth = sails.config.github.auth || process.env['GITHUB_AUTH'] || 'basic'
-
-github = Github.client(sails.config.github)
-
-repo = github.repo('ZeroK-RTS/Zero-K')
+repo = undefined
+github = {}
 github.loadCommits = ()->
   @loadCommitsPage 1
 
@@ -179,6 +173,13 @@ github.filterUnitDef = (unitDef)->
   _.pick unitDef, sails.config.zk.SIGNIFICANT_ROOT_KEYS
 
 github.refreshGithubData = ->
+  sails.config.github = sails.config.github || { }
+  sails.config.github.username = sails.config.github.username || process.env['GITHUB_USERNAME']
+  sails.config.github.password = sails.config.github.password || process.env['GITHUB_PASSWORD']
+  sails.config.github.auth = sails.config.github.auth || process.env['GITHUB_AUTH'] || 'basic'
+
+  gh = Github.client(sails.config.github)
+  repo = gh.repo('ZeroK-RTS/Zero-K')
   github.loadUnitDefs()
     .then OfficialUnitDeterminer.determineOfficialUnits
     .then github.loadCommits

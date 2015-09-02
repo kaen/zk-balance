@@ -1,3 +1,4 @@
+console.log 'loaded'
 module.exports =
   attributes:
     name:

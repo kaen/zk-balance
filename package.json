@@ -56,6 +56,7 @@
   "license": "",
   "devDependencies": {
     "sails-generate-controller-coffee": "0.0.0",
-    "sails-generate-model-coffee": "^0.10.9"
+    "sails-generate-model-coffee": "^0.10.9",
+    "waterline": "^0.10.26"
   }
 }
