@@ -7,11 +7,17 @@ module.exports = (grunt)->
       hooks: { http: false, sockets: false, pubsub: false, views: false }
     done = this.async()
     sails.lift options, (err, s)->
-      Unit.find()
+      github.ensureConfig()
+      github.loadUnitDefs()
+        .then ->
+          Unit.find().then((data)-> data)
         .then (data)->
-          grunt.file.write('.tmp/public/units.json', JSON.stringify(data))
+          grunt.file.write('.tmp/public/unit.json', JSON.stringify(data))
           return data
+        .each (unit)->
+          grunt.log.writeln "#{unit.name}"
+          grunt.file.write(".tmp/public/unit/#{unit.name}.json", JSON.stringify(unit))
         .catch (err)->
-          grunt.fail.warn 'Could not write unit file'
+          grunt.fail.warn err
         .finally ->
           done()
