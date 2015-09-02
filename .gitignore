@@ -120,3 +120,4 @@ config/github.coffee
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+www/
