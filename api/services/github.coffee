@@ -138,7 +138,7 @@ github.loadUnitDef = (file)->
       image: (unitDef.buildpic || 'none').toLowerCase()
       unitDef: JSON.stringify(unitDef)
   .then (unit)->
-    sails.log.info "successfully loaded #{unit.friendly_name}"
+    sails.log.info "successfully loaded"
   .error sails.log.error
 
 # always returns an unwrapped unit def
