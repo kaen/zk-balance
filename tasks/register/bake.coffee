@@ -14,6 +14,8 @@ module.exports = (grunt)->
         .each (unit)->
           grunt.log.writeln "#{unit.name}"
           grunt.file.write(".tmp/public/unit/#{unit.name}.json", JSON.stringify(unit))
+        .then ()->
+          grunt.file.copy(".tmp/public/views/homepage.html", ".tmp/public/index.html")
         .catch (err)->
           grunt.fail.warn err
         .finally ->
