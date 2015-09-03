@@ -36,9 +36,9 @@ module.exports.routes = {
   'GET /clan': 'ClanController.find',
   'GET /unit/:name.json': 'UnitController.findOne',
   'GET /unit.json': 'UnitController.find',
-  'GET /significant_attributes': 'StatusController.significantAttributes',
-  'GET /commit_range': 'StatusController.commitRange',
-  'get /balance_change': 'BalanceChangeController.find',
+  'GET /significant_attributes.json': 'StatusController.significantAttributes',
+  'GET /commit_range.json': 'StatusController.commitRange',
+  'get /balance_change.json': 'BalanceChangeController.find',
 
   '/': {
     view: 'homepage'
