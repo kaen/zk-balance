@@ -57,6 +57,8 @@ angular.module 'zkbalance.unit', []
           $scope.unit.unitDef = JSON.parse($scope.unit.unitDef)
           $scope.weaponSummary = weaponSummarizer.summarizeWeapons $scope.unit.unitDef
 
+          return unless $scope.unit.balanceChanges
+
           for change in $scope.unit.balanceChanges
             change.beforeUnitDef = JSON.parse(change.beforeUnitDef)
             change.afterUnitDef = JSON.parse(change.afterUnitDef)
