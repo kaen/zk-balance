@@ -35,7 +35,7 @@ div.row(ng-if="unit")
     div.well.unit-def.unit-def-delta
       json-formatter(json="unit.unitDef" open=1)
 
-  div.col-md-8
+  div.col-md-8(ng-if="changes && changes.length > 0")
     h3 Changelog ({{ countChanges() }})
     form
       div.checkbox
