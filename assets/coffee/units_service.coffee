@@ -28,7 +28,7 @@ angular.module 'zkbalance.units_service', []
     units = undefined
     get: ->
       return $q.when(units) if units
-      $http.get('/unit/', cache: true)
+      $http.get('unit.json', cache: true)
         .success (data)->
           units = data
           for unit in units

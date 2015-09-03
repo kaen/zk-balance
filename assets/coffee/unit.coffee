@@ -50,7 +50,7 @@ angular.module 'zkbalance.unit', []
       result
 
     if $routeParams.name
-      $http.get("/unit/#{$routeParams.name}", cache: true)
+      $http.get("unit/#{$routeParams.name}.json", cache: true)
         .success (data)->
           # TODO: inflate all of this in the DB layer?
           $scope.unit = data
