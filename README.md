@@ -39,13 +39,24 @@ If everything runs smoothly, we just need to bootstrap the Github data.
 7. Hold `Ctrl+C` to kill sails when you get bored (`pkill -9 -f node` may be necessary on slow rigs)
 8. All set! Now type `sails lift` and go to http://localhost:1337/ to start hacking :)
 
-##### Docker
+### Docker
 
 To test locally in an environment identical to the production server, install [Docker](https://docs.docker.com/installation/) and simply run:
 
 `$ ./ops/run-in-docker.sh`
 
 Then use `docker ps` to see which port Docker was bound to. Data is automatically refreshed in the production environment.
+
+### Static Build
+
+This project can be built statically. You will need to have `grunt` and `lua` somewhere in your `$PATH`. You may also need to configure `config/github.coffee` as shown in `config/github.coffee.example` if you are fetching unit data frequently. 
+
+```
+grunt fetch --prod
+grunt static --prod
+```
+
+The results can be found in `www/`. Due to the use of XHR, the build currently only runs behind some sort of webserver (i.e. testing via `file://` will fail).
 
 ##### Further Reading
 
