@@ -9,6 +9,7 @@ module.exports = (grunt)->
     sails.lift options, (err, s)->
       github.ensureConfig()
       github.loadUnitDefs()
+        .then(OfficialUnitDeterminer.determineOfficialUnits)
         .catch (err)->
           grunt.fail.fatal err
         .finally ->

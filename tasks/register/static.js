@@ -1,9 +1,19 @@
 module.exports = function (grunt) {
 	grunt.registerTask('static', [
-		'compileAssets',
+    'clean:dev',
     'bake',
-		'linkAssetsBuild',
-		'clean:build',
-		'copy:build'
+    'jst:dev',
+    'less:dev',
+    'jade:dev',
+    'coffee:dev',
+    'copy:dev',
+    'concat',
+    'uglify',
+    'cssmin',
+    'linkAssetsBuildProd',
+    'jade:dev',
+    'mkindex',
+    'clean:build',
+    'copy:build'
 	]);
 };
