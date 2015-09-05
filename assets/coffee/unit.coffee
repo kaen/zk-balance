@@ -11,6 +11,9 @@ angular.module 'zkbalance.unit', []
     $scope.changes =
       showAll: false
 
+    $scope.options =
+      showUnitDef: false
+
     $scope.showChange = (change)->
       change.significant || $scope.changes.showAll
 
