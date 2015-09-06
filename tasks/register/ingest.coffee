@@ -1,13 +1,26 @@
 module.exports = (grunt)->
-  grunt.registerTask 'ingest', 'Ingest unit and commit data', ->
-    grunt.log.writeln 'lifting sails...'
-    sails = require 'sails'
-    options =
-      hooks: { http: false, sockets: false, pubsub: false, views: false }
+  grunt.registerTask 'ingestRepo', 'Creates initializes the local repo', ->
+    grunt.task.requires 'lift'
     done = this.async()
-    sails.lift options, (err, s)->
-      (new GitRepositoryInitializer).initialize()
-        .then(-> (new CurrentUnitIngestor).ingest())
-        .then(-> (new OfficialUnitDeterminer).determineOfficialUnits())
-        .then(-> (new CommitIngestor).ingest())
-        .finally done
+    (new GitRepositoryInitializer).initialize()
+      .finally done
+
+  grunt.registerTask 'ingestUnits', 'Ingest unit data', ->
+    grunt.task.requires 'lift'
+    done = this.async()
+    (new CurrentUnitIngestor).ingest()
+      .then(-> (new OfficialUnitDeterminer).determineOfficialUnits())
+      .finally done
+
+  grunt.registerTask 'ingestCommits', 'Ingest commit data', ->
+    grunt.task.requires 'lift'
+    done = this.async()
+    (new CommitIngestor).ingest()
+      .finally done
+
+  grunt.registerTask 'ingest', 'Ingest unit and commit data', [
+    'lift'
+    'ingestRepo'
+    'ingestUnits'
+    'ingestCommits'
+  ]
