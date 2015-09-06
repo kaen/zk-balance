@@ -15,7 +15,7 @@ class CommitIngestor
       commitRange = "--ancestry-path #{commit}..HEAD"
     else
       commitRange = ''
-    child_process.execAsync("git log --reverse #{commitRange} --pretty=%h units/", cwd: @repoDir)
+    child_process.execAsync("git log --reverse #{commitRange} --pretty=%H units/", cwd: @repoDir)
       .spread (out, err)=>
         result = out.split("\n").map((x)-> x.trim())
         sails.log.info "Commits to process:"
@@ -33,7 +33,7 @@ class CommitIngestor
 
   getCommitAttributes: (sha)=>
     Promise.props(
-      sha: @gitLogPretty(sha, '%h')
+      sha: @gitLogPretty(sha, '%H')
       message: @gitLogPretty(sha, '%B')
       author: @gitLogPretty(sha, '%an')
       date: @gitLogPretty(sha, '%aD')
