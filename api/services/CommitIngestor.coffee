@@ -57,9 +57,8 @@ class CommitIngestor
   ingest: ()=>
     Promise.promisifyAll(child_process)
     Promise.promisifyAll(fs)
-    new GitRepositoryInitializer(undefined, @repoDir)
-      .initialize()
-      .then @getLastCommit
+    
+    @getLastCommit()
       .then @getCommitsAfter
       .map @ingestCommit, concurrency: 1
       .settle()

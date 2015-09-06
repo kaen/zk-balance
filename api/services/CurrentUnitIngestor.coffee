@@ -48,9 +48,7 @@ class CurrentUnitIngestor
   ingest: ()=>
     Promise.promisifyAll(child_process)
     Promise.promisifyAll(fs)
-    new GitRepositoryInitializer(undefined, @repoDir)
-      .initialize()
-      .then @getUnitFiles
+    @getUnitFiles()
       .map @ingestUnitFile, concurrency: 5
       .then _.compact
       .settle()

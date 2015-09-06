@@ -4,12 +4,12 @@ fs = require 'fs'
 class UnitDefEvaluator
   constructor: (repoDir, file, commit)->
     @repoDir = repoDir || sails.config.zk.REPO_DIR
-    @file = path.join(@repoDir, 'units', file)
+    @file = path.join('units', path.basename(file))
     @commit = commit || 'HEAD'
 
   getFileAtCommit: ()=>
     child_process.execAsync("git show #{@commit}:#{@file}", cwd: @repoDir)
-      .spread ((out,err,x)=> sails.log.info x ; out)
+      .spread ((out,err)=> out)
 
   unwrapUnitDef: (wrappedUnitDef)=>
     # unitdefs have a structure like { corsh: { name: ... } }

@@ -9,9 +9,16 @@ class BalanceChangeCreator
 
   getModifiedUnitFiles: ()=>
     child_process.execAsync("git diff-tree --no-commit-id --name-only -r #{@sha}", cwd: @repoDir)
-      .spread((out,err)=> out.split("\n").map((x)=> x.trim()))
+      .spread (out,err)=>
+        out.split("\n").map((x)=> x.trim())
+      .map (x)->
+        unless x and x.length and x.match /^units\//
+          return undefined
+        return x.trim()
+      .then _.compact
 
   upsertBalanceChange: (file)=>
+    sails.log.info "Importing #{file} at #{@sha}"
     @getUnitDefs(file)
       .spread @writeBalanceChange 
 
@@ -36,15 +43,13 @@ class BalanceChangeCreator
   create: ()=>
     Promise.promisifyAll(child_process)
     Promise.promisifyAll(fs)
-    new GitRepositoryInitializer(undefined, @repoDir)
-      .initialize()
-      .then @getModifiedUnitFiles
+    @getModifiedUnitFiles()
       .map @upsertBalanceChange, concurrency: 5
       .settle()
       .then _.compact
-      .then (-> sails.log.info "Done ingesting commits")
+      .then (-> sails.log.info "Done ingesting balance changes")
       .catch (err)=>
-        sails.log.warn "Error while ingesting commits"
+        sails.log.warn "Error while ingesting balance changes"
         throw err
 
 module.exports = BalanceChangeCreator
