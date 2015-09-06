@@ -13,9 +13,7 @@ class CurrentUnitIngestor
   ingestUnitFile: (filename)=>
     sails.log.info "Ingesting #{filename}"
     return false unless filename.match(/\.lua$/)
-    fs.readFileAsync(path.join(@unitsDir, filename))
-      .then lua.evalUnitDef
-      .then @unwrapUnitDef
+    new UnitDefEvaluator(@repoDir, filename).evaluate()
       .then @findOrCreateUnit
       .then @updateUnitData
       .error sails.log.error
