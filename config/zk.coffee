@@ -1,4 +1,6 @@
 module.exports.zk =
+  REPO_URL: 'https://github.com/ZeroK-RTS/Zero-K.git'
+  REPO_DIR: 'repo'
   SIGNIFICANT_ROOT_KEYS: [
     "acceleration"
     "brakerate"
