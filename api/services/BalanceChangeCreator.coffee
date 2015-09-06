@@ -19,7 +19,7 @@ class BalanceChangeCreator
       .then _.compact
 
   upsertBalanceChange: (file)=>
-    sails.log.debug " * importing change for #{file} at #{@sha}"
+    sails.log.info " * importing change for #{file} at #{@sha}"
     @getUnitDefs(file)
       .spread @writeBalanceChange 
 
@@ -53,7 +53,7 @@ class BalanceChangeCreator
       .map @upsertBalanceChange, concurrency: 5
       .settle()
       .then _.compact
-      .then (-> sails.log.debug "Done ingesting balance changes")
+      .then (-> sails.log.info "Done ingesting balance changes")
       .catch (err)=>
         sails.log.warn "Error while ingesting balance changes"
         throw err

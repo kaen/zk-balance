@@ -21,8 +21,8 @@ class CommitIngestor
       .spread (out, err)=>
         result = out.split("\n").map((x)-> x.trim())
         @todo = result.length
-        sails.log.info "Commits to process: #{result.length}"
-        sails.log.info "#{result[0]} -> #{result[result.length-1]}"
+        sails.log.debug "Commits to process: #{result.length}"
+        sails.log.debug "#{result[0]} -> #{result[result.length-1]}"
         result
 
   createBalanceChange: (sha)=>
@@ -46,16 +46,16 @@ class CommitIngestor
     @getCommitAttributes(sha)
       .then Commit.create
       .then (commit)=>
-        sails.log.debug "Created new commit #{sha} by #{commit.author}"
+        sails.log.info "Created new commit #{sha} by #{commit.author}"
         return sha
 
   ingestCommit: (commit)=>
     return undefined unless commit and commit.length
-    sails.log.debug "Ingesting commit #{commit}"
+    sails.log.info "Ingesting commit #{commit}"
     @createCommit(commit)
       .then(@createBalanceChange)
       .then(=> @done += 1)
-      .then(=> sails.log.info "Ingested commit #{commit} (#{@done}/#{@todo})")
+      .then(=> sails.log.debug "Ingested commit #{commit} (#{@done}/#{@todo})")
 
   ingest: ()=>
     Promise.promisifyAll(child_process)
@@ -66,7 +66,7 @@ class CommitIngestor
       .map @ingestCommit, concurrency: 1
       .settle()
       .then _.compact
-      .then (-> sails.log.info "Done ingesting commits")
+      .then (-> sails.log.debug "Done ingesting commits")
       .catch (err)=>
         sails.log.warn "Error while ingesting commits"
         throw err
