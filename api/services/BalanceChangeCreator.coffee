@@ -30,7 +30,7 @@ class BalanceChangeCreator
     ]
 
   writeBalanceChange: (beforeUnitDef, afterUnitDef)=>
-    id = afterUnitDef.id || beforeUnitDef.id
+    id = (if afterUnitDef then afterUnitDef.id) || (if beforeUnitDef then beforeUnitDef.id)
     BalanceChange.findOne(unit: id, commit: @sha)
       .then (change)=>
         return change if change
