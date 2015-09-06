@@ -15,7 +15,7 @@ class CommitIngestor
       commitRange = "--ancestry-path #{commit}..HEAD"
     else
       commitRange = ''
-    child_process.execAsync("git log --reverse #{commitRange} --pretty=%h", cwd: @repoDir)
+    child_process.execAsync("git log --reverse #{commitRange} --pretty=%h units/", cwd: @repoDir)
       .spread (out, err)=>
         result = out.split("\n").map((x)-> x.trim())
         sails.log.info "Commits to process:"
