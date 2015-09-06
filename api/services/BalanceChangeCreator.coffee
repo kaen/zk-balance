@@ -1,6 +1,7 @@
 child_process = require 'child_process'
 path = require 'path'
 fs = require 'fs'
+hist = require 'object-versions'
 class BalanceChangeCreator
   constructor: (sha, repoDir)->
     @sha = sha
@@ -18,7 +19,7 @@ class BalanceChangeCreator
       .then _.compact
 
   upsertBalanceChange: (file)=>
-    sails.log.info "Importing #{file} at #{@sha}"
+    sails.log.info " * importing change for #{file} at #{@sha}"
     @getUnitDefs(file)
       .spread @writeBalanceChange 
 
@@ -35,11 +36,15 @@ class BalanceChangeCreator
         return change if change
         BalanceChange.create(unit: id, commit: @sha).then((x)->x)
       .then (change)=>
+        delta = hist.diff beforeUnitDef, afterUnitDef
+        unitDefDelta = _.pick delta, sails.config.zk.SIGNIFICANT_ROOT_KEYS
         attrs =
           beforeUnitDef: JSON.stringify(beforeUnitDef)
           afterUnitDef: JSON.stringify(afterUnitDef)
-        BalanceChange.update({unit: id, commit: @sha}, attrs)
+          unitDefDelta: JSON.stringify(unitDefDelta)
+          significant: !_.isEmpty(unitDefDelta)
 
+        BalanceChange.update({unit: id, commit: @sha}, attrs)
 
   create: ()=>
     Promise.promisifyAll(child_process)

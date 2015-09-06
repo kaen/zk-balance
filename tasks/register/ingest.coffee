@@ -8,5 +8,6 @@ module.exports = (grunt)->
     sails.lift options, (err, s)->
       (new GitRepositoryInitializer).initialize()
         .then(-> (new CurrentUnitIngestor).ingest())
+        .then(-> (new OfficialUnitDeterminer).determineOfficialUnits())
         .then(-> (new CommitIngestor).ingest())
         .finally done

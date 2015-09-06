@@ -12,7 +12,7 @@ class GitRepositoryInitializer
       .spread (out, err)=>
         out.trim() == @dir.trim()
       .catch (err)=>
-        if error.code == 'ENOENT'
+        if err.code == 'ENOENT'
           sails.log.info 'Creating new directory for repo'
           return
         sails.log.warn 'Error from stat:'

@@ -31,7 +31,4 @@ class OfficialUnitDeterminer
         Promise.all([ @findBuildableUnits(option) for option in unitDef.buildoptions when not @officialUnits[option] ])
           .catch sails.log.warn
 
-OfficialUnitDeterminer.determineOfficialUnits = ->
-  (new OfficialUnitDeterminer).determineOfficialUnits()
-
 module.exports = OfficialUnitDeterminer
