@@ -5,21 +5,24 @@ class CommitIngestor
   constructor: (repoDir)->
     @repoDir = path.resolve(repoDir || sails.config.zk.REPO_DIR)
     @unitsDir = path.join(@repoDir, 'units')
+    @todo = 0
+    @done = 0
 
   getLastCommit: ()=>
     Commit.find().limit(1).sort({createdAt: 'DESC'})
-      .then((commit)=> if commit then commit.sha else commit)
+      .then((commits)=> if commits and commits[0] then commits[0].sha else undefined)
 
-  getCommitsAfter: (commit)=>
-    if commit && commit.length
-      commitRange = "--ancestry-path #{commit}..HEAD"
+  getCommitsAfter: (sha)=>
+    if sha && sha.length
+      commitRange = "--ancestry-path #{sha}..HEAD"
     else
       commitRange = ''
-    child_process.execAsync("git log --reverse #{commitRange} --pretty=%H units/", cwd: @repoDir)
+    child_process.execAsync("git log --reverse --pretty=%H #{commitRange} -- units/", cwd: @repoDir)
       .spread (out, err)=>
         result = out.split("\n").map((x)-> x.trim())
-        sails.log.info "Commits to process:"
-        sails.log.info result
+        @todo = result.length
+        sails.log.info "Commits to process: #{result.length}"
+        sails.log.info "#{result[0]} -> #{result[result.length-1]}"
         result
 
   createBalanceChange: (sha)=>
@@ -43,16 +46,16 @@ class CommitIngestor
     @getCommitAttributes(sha)
       .then Commit.create
       .then (commit)=>
-        sails.log.info "Created new commit #{sha} by #{commit.author}"
+        sails.log.debug "Created new commit #{sha} by #{commit.author}"
         return sha
 
   ingestCommit: (commit)=>
     return undefined unless commit and commit.length
-    sails.log.info "Ingesting commit #{commit}"
+    sails.log.debug "Ingesting commit #{commit}"
     @createCommit(commit)
       .then(@createBalanceChange)
-      .then _.compact
-      .settle()
+      .then(=> @done += 1)
+      .then(=> sails.log.info "Ingested commit #{commit} (#{@done}/#{@todo})")
 
   ingest: ()=>
     Promise.promisifyAll(child_process)
