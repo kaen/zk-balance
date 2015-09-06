@@ -29,15 +29,16 @@ class BalanceChangeCreator
     ]
 
   writeBalanceChange: (beforeUnitDef, afterUnitDef)=>
-    BalanceChange.findOne(unit: afterUnitDef.id, commit: @sha)
+    id = afterUnitDef.id || beforeUnitDef.id
+    BalanceChange.findOne(unit: id, commit: @sha)
       .then (change)=>
         return change if change
-        BalanceChange.create(unit: afterUnitDef.id, commit: @sha).then((x)->x)
+        BalanceChange.create(unit: id, commit: @sha).then((x)->x)
       .then (change)=>
         attrs =
           beforeUnitDef: JSON.stringify(beforeUnitDef)
           afterUnitDef: JSON.stringify(afterUnitDef)
-        BalanceChange.update({unit: change.unit, commit: change.sha}, attrs)
+        BalanceChange.update({unit: id, commit: @sha}, attrs)
 
 
   create: ()=>
