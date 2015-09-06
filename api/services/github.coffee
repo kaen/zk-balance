@@ -113,48 +113,6 @@ github.createBalanceChange = (commit, file)->
         Commit.delete(commit.sha)
           .then (-> sails.log.warn "Deleted #{commit.sha}"), ((err)-> sails.log.error "Failed to delete #{commit.sha}: #{err}")
 
-github.loadUnitDefs = ()->
-  new Promise( (resolve, reject)->
-    repo.contents 'units/', 'master', (err, contents)->
-      return reject(err) if err
-      resolve(contents)
-  )
-  .map github.loadUnitDef, concurrency: 5
-  .settle()
-
-github.loadUnitDef = (file)->
-  new Promise( (resolve, reject)->
-    repo.contents file.path, 'master', (err, content)->
-      return reject(err) if err
-      resolve(content.content)
-  )
-  .then (content)->
-    new Buffer(content, 'base64').toString()
-  .then lua.evalUnitDef
-  .then github.findOrCreateUnitFromWrappedUnitDef
-  .then (unitDef)->
-    Unit.update unitDef.id,
-      friendly_name: unitDef.name || 'unnamed'
-      image: (unitDef.buildpic || 'none').toLowerCase()
-      unitDef: JSON.stringify(unitDef)
-  .then (unit)->
-    sails.log.info "successfully loaded"
-  .error sails.log.error
-
-# always returns an unwrapped unit def
-github.findOrCreateUnitFromWrappedUnitDef = (wrappedUnitDef)=>
-  # unitdefs have a structure like { corsh: { name: ... } }
-  # so we need to get the only key -> value pair in the top-level object
-  for own unitName, unitDef of wrappedUnitDef
-    unitDef.id = unitName
-    return Unit.findOne(unitName).then (unit)=>
-      if unit
-        sails.log.info "Found unit #{unitName}"
-        return unitDef
-      sails.log.info "Creating unit #{unitName}"
-      Unit.create(name: unitDef.id)
-        .then (-> unitDef)
-
 github.determineBalanceChangeSignificance = ->
   BalanceChange.find()
     .then()
