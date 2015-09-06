@@ -28,16 +28,12 @@ $ sudo npm install -g sails
 
 If everything runs smoothly, we just need to bootstrap the Github data.
 
-##### Bootstrapping Github Data
+##### Bootstrapping Git Data
 
-1. Copy `config/github.coffee.example` to `config/github.coffee`
-2. Edit `config/github.coffee` to contain your github login
-3. run `sails c`, which will print a picture of a sailboat and bring you to the SailsJS prompt.
-4. At the prompt enter: `github.refreshGithubData()`
-5. You should see units being loaded, followed by commit data and balance change crunching.
-6. Allow this to run for a bit (10-20 minutes is ideal, it may take an hour or more to complete by itself)
-7. Hold `Ctrl+C` to kill sails when you get bored (`pkill -9 -f node` may be necessary on slow rigs)
-8. All set! Now type `sails lift` and go to http://localhost:1337/ to start hacking :)
+1. Make sure you have `git` and `grunt` somewhere in your path
+2. Run `grunt ingest`
+3. Hold `Ctrl+C` to kill grunt when you get bored (`pkill -9 -f node` may be necessary on slow rigs)
+4. All set! Now type `sails lift` and go to http://localhost:1337/ to start hacking :)
 
 ### Docker
 
